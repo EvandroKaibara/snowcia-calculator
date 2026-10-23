@@ -1,0 +1,37 @@
+.panel {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px var(--line);
+}
+
+.summary {
+  min-height: var(--touch);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.body {
+  display: grid;
+  gap: 16px;
+  padding: 4px 16px 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.reset {
+  background: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+}
+
+.note {
+  font-size: 13px;
+  color: var(--muted);
+}
