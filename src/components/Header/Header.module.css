@@ -1,0 +1,17 @@
+.header {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  padding: 8px 0 4px;
+}
+
+.logo {
+  width: min(240px, 70%);
+  height: auto;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--muted);
+}

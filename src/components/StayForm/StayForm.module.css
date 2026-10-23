@@ -1,0 +1,14 @@
+.form {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px var(--line);
+}
+
+.pet {
+  display: grid;
+  gap: 4px;
+  font-weight: 600;
+}
