@@ -1,0 +1,21 @@
+.wrap {
+  display: grid;
+  gap: 8px;
+}
+
+.button {
+  width: 100%;
+  background: var(--accent);
+  color: var(--ink);
+  min-height: 52px;
+  font-size: 17px;
+}
+
+.status {
+  font-size: 13px;
+  color: var(--danger);
+}
+
+.status:empty {
+  display: none;
+}

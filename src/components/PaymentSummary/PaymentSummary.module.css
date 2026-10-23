@@ -1,0 +1,31 @@
+.box {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.box div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.box dd {
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.total {
+  font-size: 22px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--bg) 25%, transparent);
+}
+
+.total dd {
+  color: var(--sun);
+  font-weight: 700;
+}

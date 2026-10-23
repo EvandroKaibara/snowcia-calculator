@@ -1,0 +1,44 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 76px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border-left: 4px solid transparent;
+  background: var(--bg);
+  font-size: 14px;
+}
+
+.date small {
+  color: var(--muted);
+  text-transform: capitalize;
+}
+
+.label {
+  min-width: 0;
+}
+
+/* Feriado em laranja; alta temporada e promoção em amarelo; o rótulo em texto garante o contraste */
+.feriado {
+  background: color-mix(in srgb, var(--accent) 18%, white);
+  border-left-color: var(--accent);
+}
+
+.altaTemporada,
+.promo {
+  background: color-mix(in srgb, var(--sun) 55%, white);
+  border-left-color: var(--sun);
+}
+
+.fimDeSemana {
+  border-left-color: var(--primary);
+}
