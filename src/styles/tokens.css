@@ -1,0 +1,14 @@
+/* Paleta do manual de marca (Figma SNOW_CIA_ASSETS) */
+:root {
+  --ink: #122232;
+  --primary: #4c6ba4;
+  --bg: #eef0f1;
+  --accent: #ea8a30;
+  --sun: #fde299;
+  --surface: #ffffff;
+  --line: color-mix(in srgb, var(--ink) 14%, transparent);
+  --muted: color-mix(in srgb, var(--ink) 66%, transparent);
+  --danger: #b3261e;
+  --radius: 14px;
+  --touch: 48px;
+}
