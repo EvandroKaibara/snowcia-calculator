@@ -57,7 +57,13 @@ export default function QuoteResult({ result, pet, config }: Props) {
       )}
 
       <DailyList diarias={result.diarias} />
-      <PaymentSummary total={result.total} sinal={result.sinal} saldo={result.saldo} />
+      <PaymentSummary
+        linhas={[
+          ['Total', result.total],
+          ['Sinal de 25%', result.sinal],
+          ['Saldo restante de 75%', result.saldo],
+        ]}
+      />
       <CopyButton text={buildMessage(result, pet, config)} />
     </section>
   )

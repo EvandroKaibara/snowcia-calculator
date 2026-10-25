@@ -1,0 +1,19 @@
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px var(--line);
+}
+
+.tab {
+  background: transparent;
+  color: var(--primary);
+}
+
+.tab[aria-selected='true'] {
+  background: var(--primary);
+  color: #fff;
+}

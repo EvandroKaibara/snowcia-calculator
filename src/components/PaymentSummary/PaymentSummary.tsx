@@ -1,27 +1,16 @@
 import { formatBRL } from '../../lib/format'
 import styles from './PaymentSummary.module.css'
 
-interface Props {
-  total: number
-  sinal: number
-  saldo: number
-}
-
-export default function PaymentSummary({ total, sinal, saldo }: Props) {
+// A primeira linha é o total e ganha destaque.
+export default function PaymentSummary({ linhas }: { linhas: [string, number][] }) {
   return (
     <dl className={styles.box}>
-      <div className={styles.total}>
-        <dt>Total</dt>
-        <dd>{formatBRL(total)}</dd>
-      </div>
-      <div>
-        <dt>Sinal de 25%</dt>
-        <dd>{formatBRL(sinal)}</dd>
-      </div>
-      <div>
-        <dt>Saldo restante de 75%</dt>
-        <dd>{formatBRL(saldo)}</dd>
-      </div>
+      {linhas.map(([rotulo, centavos], i) => (
+        <div key={rotulo} className={i === 0 ? styles.total : undefined}>
+          <dt>{rotulo}</dt>
+          <dd>{formatBRL(centavos)}</dd>
+        </div>
+      ))}
     </dl>
   )
 }

@@ -35,3 +35,9 @@
   font-size: 13px;
   color: var(--muted);
 }
+
+.group {
+  grid-column: 1 / -1;
+  font-size: 14px;
+  color: var(--primary);
+}
