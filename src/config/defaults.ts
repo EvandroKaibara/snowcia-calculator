@@ -13,6 +13,11 @@ export interface Config {
   limitePromo: number
   duracaoMin: number
   toleranciaMin: number
+  catBase: number
+  catAdicionalGato: number
+  catVisitasIncluidas: number
+  catVisitaExtra: number
+  catFeriado: number
   feriadosExtras: ExtraHoliday[]
 }
 
@@ -25,5 +30,10 @@ export const DEFAULT_CONFIG: Config = {
   limitePromo: 6,
   duracaoMin: 24 * 60,
   toleranciaMin: 60,
+  catBase: 2500,
+  catAdicionalGato: 1500,
+  catVisitasIncluidas: 2,
+  catVisitaExtra: 1500,
+  catFeriado: 1000,
   feriadosExtras: [],
 }

@@ -1,5 +1,6 @@
 import type { Config } from '../config/defaults'
-import { formatBRL, formatDateTime } from './format'
+import type { CatsitterQuote } from './catsitter'
+import { formatBRL, formatDate, formatDateTime } from './format'
 import type { Quote } from './pricing'
 
 function linhasDeValores(q: Quote) {
@@ -42,4 +43,31 @@ export function buildMessage(q: Quote, pet: string, config: Config): string {
     )
   }
   return linhas.join('\n')
+}
+
+export function buildCatsitterMessage(q: CatsitterQuote, nomes: string, config: Config): string {
+  const nome = nomes.trim()
+  return [
+    'Catsitter — Hotelzinho Snow&Cia',
+    '',
+    ...(nome ? [`Gato(s): ${nome}.`, ''] : []),
+    `Quantidade de gatos: ${q.gatos}.`,
+    '',
+    `Período: ${formatDate(q.inicio)} até ${formatDate(q.fim)}.`,
+    '',
+    `Total de dias de serviço: ${q.n}.`,
+    '',
+    `Visitas incluídas: ${config.catVisitasIncluidas} por dia.`,
+    '',
+    `Visitas adicionais: ${q.visitasExtras}.`,
+    '',
+    'Valores:',
+    '',
+    `- Serviço-base: ${formatBRL(q.base)}.`,
+    `- Adicionais por gatos: ${formatBRL(q.adicionalGatos)}.`,
+    `- Visitas adicionais: ${formatBRL(q.visitas)}.`,
+    `- Taxas de feriado: ${formatBRL(q.feriados)}.`,
+    '',
+    `Valor total: ${formatBRL(q.total)}.`,
+  ].join('\n')
 }
