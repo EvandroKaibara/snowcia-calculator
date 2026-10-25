@@ -1,6 +1,6 @@
 # Snow&Cia Calculator
 
-Calculadora de hospedagem do Hotelzinho Snow&Cia. Recebe data e horário de entrada e de saída, conta as diárias, aplica a tarifa de cada uma e gera o orçamento em texto para envio por WhatsApp. Roda inteira no navegador, sem backend.
+Calculadoras do Hotelzinho Snow&Cia, em duas abas. A de hospedagem recebe data e horário de entrada e de saída, conta as diárias e aplica a tarifa de cada uma. A de Catsitter recebe os gatos, o período e as visitas e calcula o valor de cada dia de atendimento. As duas geram o orçamento em texto para envio por WhatsApp. Tudo roda no navegador, sem backend.
 
 ## Stack
 
@@ -63,6 +63,27 @@ A promoção da ordem 3 vale para todas as diárias comuns da estadia, não só 
 - Sinal: 25% do total, arredondado ao centavo. Saldo: total menos o sinal.
 - Limite de 365 diárias por orçamento.
 
+## Catsitter
+
+Cada data do período, do início ao término e com as duas incluídas, é um dia de atendimento. O valor de cada dia é calculado separadamente:
+
+```
+dia = base + (gatos - 1) * adicionalGato + visitasAdicionais * visitaExtra + taxaFeriado
+```
+
+| Item                                    | Valor padrão |
+| --------------------------------------- | ------------ |
+| Base, 1 gato, com 2 visitas incluídas   | R$ 25,00     |
+| Adicional por gato                      | R$ 15,00     |
+| Visita adicional (além das 2 incluídas) | R$ 15,00     |
+| Taxa de feriado, por dia de serviço     | R$ 10,00     |
+
+- A taxa de feriado é cobrada uma vez por dia, qualquer que seja o número de gatos ou de visitas.
+- As visitas adicionais por dia valem para todos os dias do período. Cada dia da lista tem um campo próprio para ajustar só aquele dia. Alterar o valor padrão descarta esses ajustes.
+- Os horários das visitas não são pedidos nem aparecem no orçamento. Só a quantidade conta.
+- Os feriados são os mesmos da hospedagem, incluindo as datas extras do painel.
+- Limite de 365 dias por orçamento.
+
 ## Feriados
 
 `holidaysFor(ano)` devolve os feriados de São Paulo (SP) para qualquer ano:
@@ -75,7 +96,7 @@ A Páscoa é calculada pelo algoritmo de Meeus/Jones/Butcher. Carnaval e pontos 
 
 ## Configuração
 
-O painel "Configurações de preços" edita as cinco tarifas, o limite da promoção, a duração da diária, a tolerância de saída e os feriados extras. As alterações valem para os cálculos seguintes e ficam salvas no `localStorage` do navegador (chave `snowcia-config`). Os valores padrão estão em `src/config/defaults.ts`.
+O painel "Configurações de preços" edita as cinco tarifas da hospedagem, o limite da promoção, a duração da diária, a tolerância de saída e os feriados extras. O bloco Catsitter edita o valor-base, o adicional por gato, a visita adicional, a taxa de feriado e a quantidade de visitas incluídas por dia (apenas informativa: o preço depende das visitas adicionais informadas). As alterações valem para os cálculos seguintes e ficam salvas no `localStorage` do navegador (chave `snowcia-config`). Os valores padrão estão em `src/config/defaults.ts`.
 
 ## Estrutura
 
@@ -84,8 +105,9 @@ src/
   config/        valores padrão e tipo Config
   lib/           regras de negócio em funções puras, sem React
     pricing.ts     contagem de diárias, tarifas, sinal e saldo
+    catsitter.ts   dias de atendimento, adicionais e taxa de feriado
     holidays.ts    feriados por ano e cálculo da Páscoa
-    message.ts     texto do orçamento
+    message.ts     texto do orçamento (hospedagem e catsitter)
     format.ts      moeda, data, hora e duração em pt-BR
   hooks/         estado do formulário, orçamento, configuração, clipboard
   components/    um componente por pasta, com o CSS Module ao lado
@@ -95,10 +117,10 @@ src/
 
 ## Testes
 
-36 testes unitários em `src/lib` cobrem a contagem de diárias nas bordas de tolerância, as tarifas por categoria, estadias que cruzam meses e feriados, o arredondamento do sinal, a validação de entrada, o cálculo de feriados e o texto do orçamento.
+55 testes unitários em `src/lib` cobrem a contagem de diárias nas bordas de tolerância, as tarifas por categoria, estadias que cruzam meses e feriados, o arredondamento do sinal, a validação de entrada, o cálculo de feriados, os critérios de aceitação do catsitter e o texto dos dois orçamentos.
 
 ## Limitações
 
 - A configuração é por aparelho. Não há sincronização entre dispositivos.
-- Os feriados fixos são os de São Paulo (SP). Para outra localidade, edite a lista em `src/lib/holidays.ts`.
+- Os feriados fixos são os de São Paulo (SP), nas duas calculadoras. Para outra localidade, edite a lista em `src/lib/holidays.ts`.
 - Datas e horários usam o fuso do navegador. O cálculo soma 24 horas fixas por diária, o que é correto sem horário de verão (o Brasil não o adota desde 2019).
