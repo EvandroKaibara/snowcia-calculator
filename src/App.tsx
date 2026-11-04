@@ -2,6 +2,8 @@ import { useState } from 'react'
 import styles from './App.module.css'
 import CatsitterForm from './components/CatsitterForm/CatsitterForm'
 import CatsitterResult from './components/CatsitterResult/CatsitterResult'
+import DaycareForm from './components/DaycareForm/DaycareForm'
+import DaycareResult from './components/DaycareResult/DaycareResult'
 import Header from './components/Header/Header'
 import PasseioForm from './components/PasseioForm/PasseioForm'
 import PasseioResult from './components/PasseioResult/PasseioResult'
@@ -11,6 +13,7 @@ import StayForm from './components/StayForm/StayForm'
 import { useCatsitterForm } from './hooks/useCatsitterForm'
 import { useCatsitterQuote } from './hooks/useCatsitterQuote'
 import { useConfig } from './hooks/useConfig'
+import { useDaycareForm } from './hooks/useDaycareForm'
 import { usePasseioForm } from './hooks/usePasseioForm'
 import { useQuote } from './hooks/useQuote'
 import { useStayForm } from './hooks/useStayForm'
@@ -19,6 +22,7 @@ const ABAS = [
   ['hospedagem', 'Hospedagem', 'Calculadora de hospedagem'],
   ['catsitter', 'Catsitter', 'Calculadora de Catsitter'],
   ['passeios', 'Passeios', 'Calculadora de passeios'],
+  ['daycare', 'DayCare', 'Calculadora de DayCare'],
 ] as const
 
 export default function App() {
@@ -28,6 +32,7 @@ export default function App() {
   const cat = useCatsitterForm()
   const catResult = useCatsitterQuote(cat.form, config)
   const passeio = usePasseioForm(config)
+  const daycare = useDaycareForm(config)
   // Os dois formulários vivem aqui para que trocar de aba não apague o que foi preenchido.
   const [aba, setAba] = useState<(typeof ABAS)[number][0]>('hospedagem')
 
@@ -60,6 +65,11 @@ export default function App() {
           <>
             <PasseioForm form={passeio.form} onChange={passeio.setField} />
             <PasseioResult result={passeio.result} nomes={passeio.form.nomes} config={config} onPasseios={passeio.setPasseiosDoDia} />
+          </>
+        ) : aba === 'daycare' ? (
+          <>
+            <DaycareForm form={daycare.form} onChange={daycare.setField} />
+            <DaycareResult result={daycare.result} nomes={daycare.form.nomes} config={config} />
           </>
         ) : (
           <>

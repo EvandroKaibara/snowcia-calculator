@@ -1,6 +1,6 @@
 # Snow&Cia Calculator
 
-Calculadoras do Hotelzinho Snow&Cia, em duas abas. A de hospedagem recebe data e horário de entrada e de saída, conta as diárias e aplica a tarifa de cada uma. A de Catsitter recebe os gatos, o período e as visitas e calcula o valor de cada dia de atendimento. As duas geram o orçamento em texto para envio por WhatsApp. Tudo roda no navegador, sem backend.
+Calculadoras do Hotelzinho Snow&Cia, em quatro abas. A de hospedagem recebe data e horário de entrada e de saída, conta as diárias e aplica a tarifa de cada uma. A de Catsitter recebe os gatos, o período e as visitas e calcula o valor de cada dia de atendimento. As duas geram o orçamento em texto para envio por WhatsApp. Tudo roda no navegador, sem backend.
 
 ## Stack
 
@@ -103,6 +103,29 @@ dia = unitário + (passeios - 1) * (unitário - desconto)
 - Feriados aparecem na lista, mas não geram taxa.
 - Horários dos passeios não são pedidos nem entram no orçamento.
 
+## DayCare
+
+Atendimento em uma única data, cobrado por cachorro. A duração vem só da diferença entre entrada e saída; a saída precisa ser depois da entrada. A modalidade é escolhida à mão e nunca muda sozinha.
+
+```
+horasAdicionais = max(0, ceil((minutos - limite) / 60))
+total = (modalidade + horasAdicionais * horaExtra + taxaFeriado) * cachorros + passeiosExtras * (passeio + (cachorrosNoPasseio - 1) * adicionalCachorro)
+```
+
+| Item                                         | Valor padrão    |
+| -------------------------------------------- | --------------- |
+| Meio período (até 6 h, 1 passeio incluído)   | R$ 30,00        |
+| Integral (até 12 h, 2 passeios incluídos)    | R$ 45,00        |
+| Hora adicional iniciada, por cachorro        | R$ 5,00         |
+| Passeio extra de 20 min, 1 cachorro          | R$ 10,00        |
+| Cachorro adicional no passeio extra          | R$ 5,00         |
+| Taxa de feriado, por cachorro                | R$ 10,00        |
+| Sinal de reserva                             | 50% do total    |
+
+- A taxa de feriado vale uma vez por cachorro, nas duas modalidades, e não depende dos passeios. Os feriados são os mesmos da hospedagem.
+- Os passeios incluídos não geram cobrança. Os cachorros nos passeios extras acompanham o total de cachorros até serem reduzidos.
+- Não há limite de horas excedentes nem conversão automática para integral (ponto ainda em aberto na regra de negócio).
+
 ## Feriados
 
 `holidaysFor(ano)` devolve os feriados de São Paulo (SP) para qualquer ano:
@@ -126,6 +149,7 @@ src/
     pricing.ts     contagem de diárias, tarifas, sinal e saldo
     catsitter.ts   dias de atendimento, adicionais e taxa de feriado
     passeio.ts     passeios por dia, adicionais por cachorro e desconto
+    daycare.ts     modalidade, horas adicionais, passeios extras, feriado e sinal
     holidays.ts    feriados por ano e cálculo da Páscoa
     message.ts     texto do orçamento (hospedagem e catsitter)
     format.ts      moeda, data, hora e duração em pt-BR
@@ -137,7 +161,7 @@ src/
 
 ## Testes
 
-71 testes unitários em `src/lib` cobrem a contagem de diárias nas bordas de tolerância, as tarifas por categoria, estadias que cruzam meses e feriados, o arredondamento do sinal, a validação de entrada, o cálculo de feriados, os critérios de aceitação do catsitter e dos passeios e o texto dos orçamentos.
+86 testes unitários em `src/lib` cobrem a contagem de diárias nas bordas de tolerância, as tarifas por categoria, estadias que cruzam meses e feriados, o arredondamento do sinal, a validação de entrada, o cálculo de feriados, os critérios de aceitação do catsitter e dos passeios e do DayCare e o texto dos orçamentos.
 
 ## Limitações
 

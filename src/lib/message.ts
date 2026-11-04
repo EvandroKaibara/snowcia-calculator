@@ -1,7 +1,8 @@
 import type { Config } from '../config/defaults'
 import type { CatsitterQuote } from './catsitter'
+import type { DaycareQuote } from './daycare'
 import type { PasseioQuote } from './passeio'
-import { formatBRL, formatDate, formatDateTime, formatDayMonth } from './format'
+import { formatBRL, formatDate, formatDateTime, formatDayMonth, formatTime } from './format'
 import type { Quote } from './pricing'
 
 function linhasDeValores(q: Quote) {
@@ -93,5 +94,37 @@ export function buildPasseioMessage(q: PasseioQuote, nomes: string): string {
     `- Desconto por passeios adicionais: − ${formatBRL(q.desconto)}.`,
     '',
     `Total: ${formatBRL(q.total)}.`,
+  ].join('\n')
+}
+
+export function buildDaycareMessage(q: DaycareQuote, nomes: string, config: Config): string {
+  const nome = nomes.trim()
+  return [
+    'DayCare — Hotelzinho Snow&Cia',
+    '',
+    ...(nome ? [`Pet(s): ${nome}.`, ''] : []),
+    `Data: ${formatDate(q.data)}.`,
+    '',
+    `Horário: ${formatTime(q.entrada)} às ${formatTime(q.saida)}.`,
+    '',
+    `Modalidade: ${q.modalidade === 'meio' ? 'meio período' : 'integral'}.`,
+    '',
+    `Quantidade de cachorros: ${q.caes}.`,
+    '',
+    'Valores:',
+    '',
+    `- DayCare: ${formatBRL(q.base)}.`,
+    ...(q.horasExtras ? [`- Horas adicionais: ${formatBRL(q.horasExtrasValor)}.`] : []),
+    ...(q.passeiosExtras ? [`- Passeios extras: ${formatBRL(q.passeiosValor)}.`] : []),
+    ...(q.feriado ? [`- Adicional de feriado: ${formatBRL(q.taxaFeriado)}.`] : []),
+    '',
+    `Total: ${formatBRL(q.total)}.`,
+    '',
+    'Pagamento:',
+    '',
+    `- Sinal de ${config.dcSinalPct}%: ${formatBRL(q.sinal)}.`,
+    `- Saldo restante: ${formatBRL(q.saldo)}.`,
+    '',
+    'Formas de pagamento: Pix, cartão ou dinheiro.',
   ].join('\n')
 }
