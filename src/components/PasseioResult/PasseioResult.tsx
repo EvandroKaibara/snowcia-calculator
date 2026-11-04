@@ -1,10 +1,9 @@
 import type { Config } from '../../config/defaults'
-import { formatBRL, formatDate, formatDayMonth } from '../../lib/format'
+import { formatBRL, formatDate } from '../../lib/format'
 import { buildPasseioMessage } from '../../lib/message'
 import type { PasseioQuote } from '../../lib/passeio'
-import type { Daily, QuoteError } from '../../lib/pricing'
+import type { QuoteError } from '../../lib/pricing'
 import CopyButton from '../CopyButton/CopyButton'
-import DailyList from '../DailyList/DailyList'
 import PaymentSummary from '../PaymentSummary/PaymentSummary'
 import styles from '../QuoteResult/QuoteResult.module.css'
 
@@ -12,10 +11,9 @@ interface Props {
   result: PasseioQuote | QuoteError
   nomes: string
   config: Config
-  onPasseios: (data: string, n: number) => void
 }
 
-export default function PasseioResult({ result, nomes, config, onPasseios }: Props) {
+export default function PasseioResult({ result, nomes, config }: Props) {
   if (!result.ok) {
     return (
       <p role={result.vazio ? 'status' : 'alert'} className={result.vazio ? styles.hint : styles.error}>
@@ -25,15 +23,6 @@ export default function PasseioResult({ result, nomes, config, onPasseios }: Pro
   }
 
   const nome = nomes.trim()
-  const atendidos = result.dias.filter((d) => d.passeios > 0)
-  const feriados = atendidos.filter((d) => d.feriado)
-  const diarias: Daily[] = result.dias.map((d) => ({
-    inicio: d.data,
-    classe: d.feriado ? 'feriado' : 'semana',
-    rotulo: d.feriado ? `Feriado: ${d.feriado}` : d.passeios ? 'Dia comum' : 'Sem passeio',
-    centavos: d.subtotal,
-  }))
-
   return (
     <section className={styles.card} aria-label="Orçamento">
       <dl className={styles.summary}>
@@ -48,14 +37,8 @@ export default function PasseioResult({ result, nomes, config, onPasseios }: Pro
           <dd>{result.caes}</dd>
         </div>
         <div>
-          <dt>Período</dt>
-          <dd>
-            {formatDate(result.inicio)} a {formatDate(result.fim)}
-          </dd>
-        </div>
-        <div>
-          <dt>Dias de atendimento</dt>
-          <dd>{result.diasAtendidos}</dd>
+          <dt>Data</dt>
+          <dd>{formatDate(result.data)}</dd>
         </div>
         <div>
           <dt>Total de passeios</dt>
@@ -65,32 +48,13 @@ export default function PasseioResult({ result, nomes, config, onPasseios }: Pro
           <dt>Valor de 1 passeio</dt>
           <dd>{formatBRL(config.pasBase + (result.caes - 1) * config.pasAdicionalCao)}</dd>
         </div>
-        <div>
-          <dt>Feriados</dt>
-          <dd>{feriados.length ? feriados.map((d) => formatDayMonth(d.data)).join(', ') : 'Nenhum'}</dd>
-        </div>
-      </dl>
-
-      <DailyList
-        diarias={diarias}
-        extra={(i) => (
-          <>
-            Passeios
-            <input
-              type="number"
-              inputMode="numeric"
-              min={0}
-              value={result.dias[i].passeios}
-              aria-label={`Passeios em ${formatDayMonth(result.dias[i].data)}`}
-              onFocus={(e) => e.currentTarget.select()}
-              onChange={(e) => {
-                const v = e.currentTarget.valueAsNumber
-                if (Number.isFinite(v) && v >= 0) onPasseios(result.dias[i].chave, Math.floor(v))
-              }}
-            />
-          </>
+        {result.feriado && (
+          <div>
+            <dt>Feriado</dt>
+            <dd>{result.feriado} (sem taxa)</dd>
+          </div>
         )}
-      />
+      </dl>
       <PaymentSummary
         linhas={[
           ['Valor total', result.total],

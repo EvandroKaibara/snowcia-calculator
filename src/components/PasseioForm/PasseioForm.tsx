@@ -16,13 +16,8 @@ export default function PasseioForm({ form, onChange }: Props) {
         <input value={form.nomes} onChange={(e) => onChange('nomes', e.target.value)} autoComplete="off" />
       </label>
       <NumberField label="Quantidade de cachorros" value={form.caes} min={1} onChange={(v) => onChange('caes', Math.floor(v))} />
-      <DateTimeField legend="Primeiro dia" date={form.inicioData} onDate={(v) => onChange('inicioData', v)} />
-      <DateTimeField legend="Último dia" date={form.fimData} onDate={(v) => onChange('fimData', v)} />
-      <NumberField
-        label="Passeios por dia"
-        value={form.passeiosPorDia}
-        onChange={(v) => onChange('passeiosPorDia', Math.floor(v))}
-      />
+      <DateTimeField legend="Data do atendimento" date={form.data} onDate={(v) => onChange('data', v)} />
+      <NumberField label="Quantidade de passeios" value={form.passeios} min={1} onChange={(v) => onChange('passeios', Math.floor(v))} />
     </form>
   )
 }

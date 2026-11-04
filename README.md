@@ -86,11 +86,11 @@ dia = base + (gatos - 1) * adicionalGato + visitasAdicionais * visitaExtra + tax
 
 ## Passeios
 
-Cobrança por unidade, dia a dia. O desconto reinicia a cada dia e vale uma vez por passeio adicional, seja qual for o número de cachorros:
+Atendimento em uma única data. O passeio é cobrado por unidade, e cada passeio adicional no mesmo dia recebe desconto, seja qual for o número de cachorros:
 
 ```
 unitário = base + (cachorros - 1) * adicionalCachorro
-dia = unitário + (passeios - 1) * (unitário - desconto)
+total = unitário + (passeios - 1) * (unitário - desconto)
 ```
 
 | Item                                   | Valor padrão |
@@ -99,8 +99,8 @@ dia = unitário + (passeios - 1) * (unitário - desconto)
 | Adicional por cachorro                 | R$ 15,00     |
 | Desconto por passeio adicional no dia  | R$ 5,00      |
 
-- A quantidade padrão de passeios por dia vale para todo o período. Cada dia da lista tem campo próprio; 0 passeio tira o dia da cobrança, o que permite dias não consecutivos.
-- Feriados aparecem na lista, mas não geram taxa.
+- Um orçamento cobre um dia. Vários dias exigem um orçamento por dia.
+- Feriados são identificados na tela, mas não geram taxa.
 - Horários dos passeios não são pedidos nem entram no orçamento.
 
 ## DayCare
@@ -148,7 +148,7 @@ src/
   lib/           regras de negócio em funções puras, sem React
     pricing.ts     contagem de diárias, tarifas, sinal e saldo
     catsitter.ts   dias de atendimento, adicionais e taxa de feriado
-    passeio.ts     passeios por dia, adicionais por cachorro e desconto
+    passeio.ts     passeios do dia, adicionais por cachorro e desconto
     daycare.ts     modalidade, horas adicionais, passeios extras, feriado e sinal
     holidays.ts    feriados por ano e cálculo da Páscoa
     message.ts     texto do orçamento (hospedagem e catsitter)
@@ -161,7 +161,7 @@ src/
 
 ## Testes
 
-86 testes unitários em `src/lib` cobrem a contagem de diárias nas bordas de tolerância, as tarifas por categoria, estadias que cruzam meses e feriados, o arredondamento do sinal, a validação de entrada, o cálculo de feriados, os critérios de aceitação do catsitter e dos passeios e do DayCare e o texto dos orçamentos.
+85 testes unitários em `src/lib` cobrem a contagem de diárias nas bordas de tolerância, as tarifas por categoria, estadias que cruzam meses e feriados, o arredondamento do sinal, a validação de entrada, o cálculo de feriados, os critérios de aceitação do catsitter e dos passeios e do DayCare e o texto dos orçamentos.
 
 ## Limitações
 

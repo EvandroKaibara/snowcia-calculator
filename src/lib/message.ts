@@ -2,7 +2,7 @@ import type { Config } from '../config/defaults'
 import type { CatsitterQuote } from './catsitter'
 import type { DaycareQuote } from './daycare'
 import type { PasseioQuote } from './passeio'
-import { formatBRL, formatDate, formatDateTime, formatDayMonth, formatTime } from './format'
+import { formatBRL, formatDate, formatDateTime, formatTime } from './format'
 import type { Quote } from './pricing'
 
 function linhasDeValores(q: Quote) {
@@ -76,12 +76,11 @@ export function buildCatsitterMessage(q: CatsitterQuote, nomes: string, config: 
 
 export function buildPasseioMessage(q: PasseioQuote, nomes: string): string {
   const nome = nomes.trim()
-  const datas = q.dias.filter((d) => d.passeios > 0).map((d) => `${formatDayMonth(d.data)} (${d.passeios})`)
   return [
     'Passeios — Hotelzinho Snow&Cia',
     '',
     ...(nome ? [`Pet(s): ${nome}.`, ''] : []),
-    `Período: ${datas.join(', ')}.`,
+    `Data: ${formatDate(q.data)}.`,
     '',
     `Quantidade de cachorros: ${q.caes}.`,
     '',
