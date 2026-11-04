@@ -137,7 +137,7 @@ src/
 
 ## Testes
 
-55 testes unitários em `src/lib` cobrem a contagem de diárias nas bordas de tolerância, as tarifas por categoria, estadias que cruzam meses e feriados, o arredondamento do sinal, a validação de entrada, o cálculo de feriados, os critérios de aceitação do catsitter e o texto dos dois orçamentos.
+71 testes unitários em `src/lib` cobrem a contagem de diárias nas bordas de tolerância, as tarifas por categoria, estadias que cruzam meses e feriados, o arredondamento do sinal, a validação de entrada, o cálculo de feriados, os critérios de aceitação do catsitter e dos passeios e o texto dos orçamentos.
 
 ## Limitações
 
