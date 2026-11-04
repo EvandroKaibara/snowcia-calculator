@@ -10,7 +10,7 @@ interface Props {
   onReset: () => void
 }
 
-type Tarifa = 'semana' | 'fimDeSemana' | 'altaTemporada' | 'feriado' | 'promo' | 'catBase' | 'catAdicionalGato' | 'catVisitaExtra' | 'catFeriado' | 'pasBase' | 'pasAdicionalCao' | 'pasDesconto'
+type Tarifa = 'semana' | 'fimDeSemana' | 'altaTemporada' | 'feriado' | 'promo' | 'catBase' | 'catAdicionalGato' | 'catVisitaExtra' | 'catFeriado' | 'pasBase' | 'pasAdicionalCao' | 'pasDesconto' | 'dcMeio' | 'dcIntegral' | 'dcHoraExtra' | 'dcPasseioExtra' | 'dcPasseioExtraCao' | 'dcFeriado'
 
 const TARIFAS: [Tarifa, string][] = [
   ['semana', 'Segunda a quinta (R$)'],
@@ -31,6 +31,21 @@ const PASSEIO_TARIFAS: [Tarifa, string][] = [
   ['pasBase', 'Primeiro passeio, 1 cachorro (R$)'],
   ['pasAdicionalCao', 'Adicional por cachorro (R$)'],
   ['pasDesconto', 'Desconto por passeio adicional no dia (R$)'],
+]
+
+const DAYCARE_TARIFAS: [Tarifa, string][] = [
+  ['dcMeio', 'Meio período, por cachorro (R$)'],
+  ['dcIntegral', 'Integral, por cachorro (R$)'],
+  ['dcHoraExtra', 'Hora adicional, por cachorro (R$)'],
+  ['dcPasseioExtra', 'Passeio extra, 1 cachorro (R$)'],
+  ['dcPasseioExtraCao', 'Cachorro adicional no passeio extra (R$)'],
+  ['dcFeriado', 'Taxa de feriado, por cachorro (R$)'],
+]
+
+const DAYCARE_INTEIROS: ['dcPasseiosMeio' | 'dcPasseiosIntegral' | 'dcSinalPct', string][] = [
+  ['dcPasseiosMeio', 'Passeios incluídos no meio período'],
+  ['dcPasseiosIntegral', 'Passeios incluídos no integral'],
+  ['dcSinalPct', 'Sinal de reserva (%)'],
 ]
 
 export default function SettingsPanel({ config, onChange, onReset }: Props) {
@@ -79,6 +94,25 @@ export default function SettingsPanel({ config, onChange, onReset }: Props) {
           />
           <h3 className={styles.group}>Passeios</h3>
           {campos(PASSEIO_TARIFAS)}
+          <h3 className={styles.group}>DayCare</h3>
+          {campos(DAYCARE_TARIFAS)}
+          <NumberField
+            label="Limite do meio período (h)"
+            value={config.dcLimiteMeioMin / 60}
+            step={0.5}
+            min={0.5}
+            onChange={(v) => onChange('dcLimiteMeioMin', Math.round(v * 60))}
+          />
+          <NumberField
+            label="Limite do integral (h)"
+            value={config.dcLimiteIntegralMin / 60}
+            step={0.5}
+            min={0.5}
+            onChange={(v) => onChange('dcLimiteIntegralMin', Math.round(v * 60))}
+          />
+          {DAYCARE_INTEIROS.map(([campo, label]) => (
+            <NumberField key={campo} label={label} value={config[campo]} onChange={(v) => onChange(campo, Math.floor(v))} />
+          ))}
         </div>
         <HolidayEditor extras={config.feriadosExtras} onChange={(x) => onChange('feriadosExtras', x)} />
         <button

@@ -21,6 +21,17 @@ export interface Config {
   pasBase: number
   pasAdicionalCao: number
   pasDesconto: number
+  dcMeio: number
+  dcIntegral: number
+  dcLimiteMeioMin: number
+  dcLimiteIntegralMin: number
+  dcHoraExtra: number
+  dcPasseioExtra: number
+  dcPasseioExtraCao: number
+  dcPasseiosMeio: number
+  dcPasseiosIntegral: number
+  dcFeriado: number
+  dcSinalPct: number
   feriadosExtras: ExtraHoliday[]
 }
 
@@ -41,5 +52,16 @@ export const DEFAULT_CONFIG: Config = {
   pasBase: 2000,
   pasAdicionalCao: 1500,
   pasDesconto: 500,
+  dcMeio: 3000,
+  dcIntegral: 4500,
+  dcLimiteMeioMin: 6 * 60,
+  dcLimiteIntegralMin: 12 * 60,
+  dcHoraExtra: 500,
+  dcPasseioExtra: 1000,
+  dcPasseioExtraCao: 500,
+  dcPasseiosMeio: 1,
+  dcPasseiosIntegral: 2,
+  dcFeriado: 1000,
+  dcSinalPct: 50,
   feriadosExtras: [],
 }
