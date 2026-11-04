@@ -10,7 +10,7 @@ interface Props {
   onReset: () => void
 }
 
-type Tarifa = 'semana' | 'fimDeSemana' | 'altaTemporada' | 'feriado' | 'promo' | 'catBase' | 'catAdicionalGato' | 'catVisitaExtra' | 'catFeriado'
+type Tarifa = 'semana' | 'fimDeSemana' | 'altaTemporada' | 'feriado' | 'promo' | 'catBase' | 'catAdicionalGato' | 'catVisitaExtra' | 'catFeriado' | 'pasBase' | 'pasAdicionalCao' | 'pasDesconto'
 
 const TARIFAS: [Tarifa, string][] = [
   ['semana', 'Segunda a quinta (R$)'],
@@ -25,6 +25,12 @@ const CAT_TARIFAS: [Tarifa, string][] = [
   ['catAdicionalGato', 'Adicional por gato (R$)'],
   ['catVisitaExtra', 'Visita adicional (R$)'],
   ['catFeriado', 'Taxa de feriado por dia (R$)'],
+]
+
+const PASSEIO_TARIFAS: [Tarifa, string][] = [
+  ['pasBase', 'Primeiro passeio, 1 cachorro (R$)'],
+  ['pasAdicionalCao', 'Adicional por cachorro (R$)'],
+  ['pasDesconto', 'Desconto por passeio adicional no dia (R$)'],
 ]
 
 export default function SettingsPanel({ config, onChange, onReset }: Props) {
@@ -71,6 +77,8 @@ export default function SettingsPanel({ config, onChange, onReset }: Props) {
             value={config.catVisitasIncluidas}
             onChange={(v) => onChange('catVisitasIncluidas', Math.floor(v))}
           />
+          <h3 className={styles.group}>Passeios</h3>
+          {campos(PASSEIO_TARIFAS)}
         </div>
         <HolidayEditor extras={config.feriadosExtras} onChange={(x) => onChange('feriadosExtras', x)} />
         <button
