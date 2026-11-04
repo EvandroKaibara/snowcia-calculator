@@ -18,6 +18,9 @@ export interface Config {
   catVisitasIncluidas: number
   catVisitaExtra: number
   catFeriado: number
+  pasBase: number
+  pasAdicionalCao: number
+  pasDesconto: number
   feriadosExtras: ExtraHoliday[]
 }
 
@@ -35,5 +38,8 @@ export const DEFAULT_CONFIG: Config = {
   catVisitasIncluidas: 2,
   catVisitaExtra: 1500,
   catFeriado: 1000,
+  pasBase: 2000,
+  pasAdicionalCao: 1500,
+  pasDesconto: 500,
   feriadosExtras: [],
 }

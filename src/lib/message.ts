@@ -1,6 +1,7 @@
 import type { Config } from '../config/defaults'
 import type { CatsitterQuote } from './catsitter'
-import { formatBRL, formatDate, formatDateTime } from './format'
+import type { PasseioQuote } from './passeio'
+import { formatBRL, formatDate, formatDateTime, formatDayMonth } from './format'
 import type { Quote } from './pricing'
 
 function linhasDeValores(q: Quote) {
@@ -69,5 +70,28 @@ export function buildCatsitterMessage(q: CatsitterQuote, nomes: string, config: 
     `- Taxas de feriado: ${formatBRL(q.feriados)}.`,
     '',
     `Valor total: ${formatBRL(q.total)}.`,
+  ].join('\n')
+}
+
+export function buildPasseioMessage(q: PasseioQuote, nomes: string): string {
+  const nome = nomes.trim()
+  const datas = q.dias.filter((d) => d.passeios > 0).map((d) => `${formatDayMonth(d.data)} (${d.passeios})`)
+  return [
+    'Passeios — Hotelzinho Snow&Cia',
+    '',
+    ...(nome ? [`Pet(s): ${nome}.`, ''] : []),
+    `Período: ${datas.join(', ')}.`,
+    '',
+    `Quantidade de cachorros: ${q.caes}.`,
+    '',
+    `Quantidade de passeios: ${q.passeios}.`,
+    '',
+    'Valores:',
+    '',
+    `- Passeios-base: ${formatBRL(q.base)}.`,
+    `- Adicionais por cachorro: ${formatBRL(q.adicionalCaes)}.`,
+    `- Desconto por passeios adicionais: − ${formatBRL(q.desconto)}.`,
+    '',
+    `Total: ${formatBRL(q.total)}.`,
   ].join('\n')
 }

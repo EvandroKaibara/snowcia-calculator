@@ -84,6 +84,25 @@ dia = base + (gatos - 1) * adicionalGato + visitasAdicionais * visitaExtra + tax
 - Os feriados são os mesmos da hospedagem, incluindo as datas extras do painel.
 - Limite de 365 dias por orçamento.
 
+## Passeios
+
+Cobrança por unidade, dia a dia. O desconto reinicia a cada dia e vale uma vez por passeio adicional, seja qual for o número de cachorros:
+
+```
+unitário = base + (cachorros - 1) * adicionalCachorro
+dia = unitário + (passeios - 1) * (unitário - desconto)
+```
+
+| Item                                   | Valor padrão |
+| -------------------------------------- | ------------ |
+| Primeiro passeio, 1 cachorro           | R$ 20,00     |
+| Adicional por cachorro                 | R$ 15,00     |
+| Desconto por passeio adicional no dia  | R$ 5,00      |
+
+- A quantidade padrão de passeios por dia vale para todo o período. Cada dia da lista tem campo próprio; 0 passeio tira o dia da cobrança, o que permite dias não consecutivos.
+- Feriados aparecem na lista, mas não geram taxa.
+- Horários dos passeios não são pedidos nem entram no orçamento.
+
 ## Feriados
 
 `holidaysFor(ano)` devolve os feriados de São Paulo (SP) para qualquer ano:
@@ -106,6 +125,7 @@ src/
   lib/           regras de negócio em funções puras, sem React
     pricing.ts     contagem de diárias, tarifas, sinal e saldo
     catsitter.ts   dias de atendimento, adicionais e taxa de feriado
+    passeio.ts     passeios por dia, adicionais por cachorro e desconto
     holidays.ts    feriados por ano e cálculo da Páscoa
     message.ts     texto do orçamento (hospedagem e catsitter)
     format.ts      moeda, data, hora e duração em pt-BR
