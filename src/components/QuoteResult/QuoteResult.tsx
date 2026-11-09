@@ -61,7 +61,7 @@ export default function QuoteResult({ result, pet, config }: Props) {
         linhas={[
           ['Total', result.total],
           ['Sinal de 50%', result.sinal],
-          ['Saldo restante de 75%', result.saldo],
+          ['Saldo restante de 50%', result.saldo],
         ]}
       />
       <CopyButton text={buildMessage(result, pet, config)} />
