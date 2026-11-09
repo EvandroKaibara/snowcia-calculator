@@ -52,7 +52,7 @@ export function countDailies(minutos: number, c: Pick<Config, 'duracaoMin' | 'to
   return Math.max(1, Math.ceil((minutos - c.toleranciaMin) / Math.max(1, c.duracaoMin)))
 }
 
-export function splitDeposit(total: number, pct = 25) {
+export function splitDeposit(total: number, pct = 50) {
   const sinal = Math.round((total * pct) / 100)
   return { sinal, saldo: total - sinal }
 }

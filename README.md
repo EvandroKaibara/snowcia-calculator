@@ -60,7 +60,7 @@ A promoção da ordem 3 vale para todas as diárias comuns da estadia, não só 
 
 - Valores em centavos, sem ponto flutuante.
 - Total: soma das diárias calculadas individualmente.
-- Sinal: 25% do total, arredondado ao centavo. Saldo: total menos o sinal.
+- Sinal: 50% do total, arredondado ao centavo. Saldo: total menos o sinal.
 - Limite de 365 diárias por orçamento.
 
 ## Catsitter

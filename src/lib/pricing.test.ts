@@ -84,15 +84,15 @@ describe('tarifas (RN-04 a RN-08)', () => {
 })
 
 describe('sinal e saldo (RN-10)', () => {
-  it('R$ 400,00 vira sinal de R$ 100,00 e saldo de R$ 300,00', () => {
+  it('R$ 400,00 vira sinal de R$ 200,00 e saldo de R$ 200,00', () => {
     const q = ok([SEG, '07:00'], ['2026-03-10', '07:00'])
-    expect([q.sinal, q.saldo]).toEqual([10000, 30000])
+    expect([q.sinal, q.saldo]).toEqual([20000, 20000])
   })
 
   it('arredonda o sinal em centavos e o saldo fecha o total', () => {
     const q = ok([SEG, '10:00'], ['2026-03-03', '10:00'], { ...DEFAULT_CONFIG, semana: 5001 })
-    expect(q.sinal).toBe(1250)
-    expect(q.saldo).toBe(3751)
+    expect(q.sinal).toBe(2501)
+    expect(q.saldo).toBe(2500)
     expect(q.sinal + q.saldo).toBe(q.total)
   })
 })

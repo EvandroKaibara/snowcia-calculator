@@ -60,7 +60,7 @@ export default function QuoteResult({ result, pet, config }: Props) {
       <PaymentSummary
         linhas={[
           ['Total', result.total],
-          ['Sinal de 25%', result.sinal],
+          ['Sinal de 50%', result.sinal],
           ['Saldo restante de 75%', result.saldo],
         ]}
       />

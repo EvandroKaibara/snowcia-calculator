@@ -33,7 +33,7 @@ export function buildMessage(q: Quote, pet: string, config: Config): string {
     '',
     'Pagamento:',
     '',
-    `- Sinal de 25%: ${formatBRL(q.sinal)}.`,
+    `- Sinal de 50%: ${formatBRL(q.sinal)}.`,
     `- Saldo restante: ${formatBRL(q.saldo)}.`,
     '',
     'Formas de pagamento: Pix, cartão ou dinheiro.',
