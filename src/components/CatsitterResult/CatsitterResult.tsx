@@ -77,7 +77,7 @@ export default function CatsitterResult({ result, nomes, config, onExtras }: Pro
       <DailyList
         diarias={diarias}
         extra={(i) => (
-          <>
+          <label>
             Visitas extras
             <input
               type="number"
@@ -91,7 +91,7 @@ export default function CatsitterResult({ result, nomes, config, onExtras }: Pro
                 if (Number.isFinite(v) && v >= 0) onExtras(result.dias[i].chave, Math.floor(v))
               }}
             />
-          </>
+          </label>
         )}
       />
       <PaymentSummary

@@ -86,22 +86,27 @@ dia = base + (gatos - 1) * adicionalGato + visitasAdicionais * visitaExtra + tax
 
 ## Passeios
 
-Atendimento em uma única data. O passeio é cobrado por unidade, e cada passeio adicional no mesmo dia recebe desconto, seja qual for o número de cachorros:
+Atendimento em uma data ou em um período de vários dias, com o serviço complementar de limpeza / troca de ração e água. O passeio é cobrado por unidade, e cada passeio adicional no mesmo dia recebe desconto, seja qual for o número de cachorros:
 
 ```
 unitário = base + (cachorros - 1) * adicionalCachorro
-total = unitário + (passeios - 1) * (unitário - desconto)
+passeios do dia = unitário + (passeios - 1) * (unitário - desconto)
+total do dia = passeios do dia + limpezas * valorLimpeza
+total = soma dos totais de cada dia
 ```
 
-| Item                                   | Valor padrão |
-| -------------------------------------- | ------------ |
-| Primeiro passeio, 1 cachorro           | R$ 20,00     |
-| Adicional por cachorro                 | R$ 15,00     |
-| Desconto por passeio adicional no dia  | R$ 5,00      |
+| Item                                         | Valor padrão       |
+| -------------------------------------------- | ------------------ |
+| Primeiro passeio, 1 cachorro                 | R$ 25,00           |
+| Adicional por cachorro                       | R$ 15,00           |
+| Desconto por passeio adicional no dia        | R$ 5,00            |
+| Limpeza / troca de ração e água              | R$ 10,00 por vez   |
 
-- Um orçamento cobre um dia. Vários dias exigem um orçamento por dia.
+- Na data única, informe a quantidade de passeios e de limpezas. No período, cada dia ganha um card com campos próprios de passeios, limpezas e horários (opcional) e o subtotal. Zero é aceito em qualquer dia.
+- Os valores "por dia (padrão)" valem para os dias que não foram editados. "Aplicar a todos os dias" sobrescreve passeios e limpezas de todos os dias com o padrão (os horários ficam).
+- O desconto recomeça a cada data. A limpeza não é multiplicada pelos cachorros, não tem desconto e não afeta o desconto dos passeios.
 - Feriados são identificados na tela, mas não geram taxa.
-- Horários dos passeios não são pedidos nem entram no orçamento.
+- O texto para o WhatsApp lista os dias com serviço, os horários digitados e o resumo; dias sem serviço ficam de fora. Limite de 365 dias por orçamento.
 
 ## DayCare
 
@@ -148,7 +153,7 @@ src/
   lib/           regras de negócio em funções puras, sem React
     pricing.ts     contagem de diárias, tarifas, sinal e saldo
     catsitter.ts   dias de atendimento, adicionais e taxa de feriado
-    passeio.ts     passeios do dia, adicionais por cachorro e desconto
+    passeio.ts     passeios e limpezas por dia, adicionais por cachorro, desconto e total do período
     daycare.ts     modalidade, horas adicionais, passeios extras, feriado e sinal
     holidays.ts    feriados por ano e cálculo da Páscoa
     message.ts     texto do orçamento (hospedagem e catsitter)
@@ -161,7 +166,7 @@ src/
 
 ## Testes
 
-85 testes unitários em `src/lib` cobrem a contagem de diárias nas bordas de tolerância, as tarifas por categoria, estadias que cruzam meses e feriados, o arredondamento do sinal, a validação de entrada, o cálculo de feriados, os critérios de aceitação do catsitter e dos passeios e do DayCare e o texto dos orçamentos.
+101 testes unitários em `src/lib` cobrem a contagem de diárias nas bordas de tolerância, as tarifas por categoria, estadias que cruzam meses e feriados, o arredondamento do sinal, a validação de entrada, o cálculo de feriados, os critérios de aceitação do catsitter e dos passeios e do DayCare e o texto dos orçamentos.
 
 ## Limitações
 

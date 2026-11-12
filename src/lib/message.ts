@@ -1,8 +1,8 @@
 import type { Config } from '../config/defaults'
 import type { CatsitterQuote } from './catsitter'
 import type { DaycareQuote } from './daycare'
-import type { PasseioQuote } from './passeio'
-import { formatBRL, formatDate, formatDateTime, formatTime } from './format'
+import { describeDay, type PasseioQuote } from './passeio'
+import { formatBRL, formatDate, formatDateTime, formatDayMonth, formatTime } from './format'
 import type { Quote } from './pricing'
 
 function linhasDeValores(q: Quote) {
@@ -76,21 +76,33 @@ export function buildCatsitterMessage(q: CatsitterQuote, nomes: string, config: 
 
 export function buildPasseioMessage(q: PasseioQuote, nomes: string): string {
   const nome = nomes.trim()
+  const periodo = q.modo === 'periodo'
+  const servicos = q.dias
+    .filter((d) => d.passeios || d.limpezas)
+    .map((d) => {
+      const horarios = d.horarios.trim()
+      return `${formatDayMonth(d.data)} — ${describeDay(d, true)}${horarios ? ` (horários: ${horarios})` : ''}: ${formatBRL(d.subtotal)}`
+    })
   return [
     'Passeios — Hotelzinho Snow&Cia',
     '',
-    ...(nome ? [`Pet(s): ${nome}.`, ''] : []),
-    `Data: ${formatDate(q.data)}.`,
+    ...(nome ? [`Pet: ${nome}`, ''] : []),
+    periodo ? `Período: ${formatDate(q.inicio)} a ${formatDate(q.fim)}` : `Data: ${formatDate(q.inicio)}`,
     '',
-    `Quantidade de cachorros: ${q.caes}.`,
+    `Quantidade de cachorros: ${q.caes}`,
     '',
-    `Quantidade de passeios: ${q.passeios}.`,
+    'Serviços por data:',
     '',
-    'Valores:',
+    ...servicos.flatMap((linha) => [linha, '']),
+    'Resumo:',
     '',
-    `- Passeios-base: ${formatBRL(q.base)}.`,
-    `- Adicionais por cachorro: ${formatBRL(q.adicionalCaes)}.`,
-    `- Desconto por passeios adicionais: − ${formatBRL(q.desconto)}.`,
+    `- Quantidade total de passeios: ${q.passeios}.`,
+    `- Valor bruto dos passeios: ${formatBRL(q.bruto)}.`,
+    `- Descontos aplicados: − ${formatBRL(q.desconto)}.`,
+    `- Valor líquido dos passeios: ${formatBRL(q.liquido)}.`,
+    ...(q.limpezas
+      ? [`- ${q.limpezas} ${q.limpezas === 1 ? 'serviço' : 'serviços'} de limpeza / troca de ração e água: ${formatBRL(q.limpezaValor)}.`]
+      : []),
     '',
     `Total: ${formatBRL(q.total)}.`,
   ].join('\n')

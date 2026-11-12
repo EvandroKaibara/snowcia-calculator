@@ -45,8 +45,9 @@
 
 .extra {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 8px 16px;
   margin-top: 4px;
   font-size: 13px;
   color: var(--muted);
@@ -56,4 +57,14 @@
   width: 64px;
   min-height: 36px;
   padding: 4px 8px;
+}
+
+.extra label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.extra input[type='text'] {
+  width: 150px;
 }

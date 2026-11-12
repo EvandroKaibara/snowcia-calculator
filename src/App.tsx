@@ -63,8 +63,8 @@ export default function App() {
           </>
         ) : aba === 'passeios' ? (
           <>
-            <PasseioForm form={passeio.form} onChange={passeio.setField} />
-            <PasseioResult result={passeio.result} nomes={passeio.form.nomes} config={config} />
+            <PasseioForm form={passeio.form} onChange={passeio.setField} onApplyAll={passeio.aplicarATodos} />
+            <PasseioResult result={passeio.result} nomes={passeio.form.nomes} config={config} onDay={passeio.setDia} />
           </>
         ) : aba === 'daycare' ? (
           <>

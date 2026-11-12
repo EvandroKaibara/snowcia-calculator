@@ -21,6 +21,7 @@ export interface Config {
   pasBase: number
   pasAdicionalCao: number
   pasDesconto: number
+  pasLimpeza: number
   dcMeio: number
   dcIntegral: number
   dcLimiteMeioMin: number
@@ -49,9 +50,10 @@ export const DEFAULT_CONFIG: Config = {
   catVisitasIncluidas: 2,
   catVisitaExtra: 1500,
   catFeriado: 1000,
-  pasBase: 2000,
+  pasBase: 2500,
   pasAdicionalCao: 1500,
   pasDesconto: 500,
+  pasLimpeza: 1000,
   dcMeio: 3000,
   dcIntegral: 4500,
   dcLimiteMeioMin: 6 * 60,
