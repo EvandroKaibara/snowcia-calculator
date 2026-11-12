@@ -10,7 +10,7 @@ interface Props {
   onReset: () => void
 }
 
-type Tarifa = 'semana' | 'fimDeSemana' | 'altaTemporada' | 'feriado' | 'promo' | 'catBase' | 'catAdicionalGato' | 'catVisitaExtra' | 'catFeriado' | 'pasBase' | 'pasAdicionalCao' | 'pasDesconto' | 'dcMeio' | 'dcIntegral' | 'dcHoraExtra' | 'dcPasseioExtra' | 'dcPasseioExtraCao' | 'dcFeriado'
+type Tarifa = 'semana' | 'fimDeSemana' | 'altaTemporada' | 'feriado' | 'promo' | 'catBase' | 'catAdicionalGato' | 'catVisitaExtra' | 'catFeriado' | 'pasBase' | 'pasAdicionalCao' | 'pasDesconto' | 'pasLimpeza' | 'dcMeio' | 'dcIntegral' | 'dcHoraExtra' | 'dcPasseioExtra' | 'dcPasseioExtraCao' | 'dcFeriado'
 
 const TARIFAS: [Tarifa, string][] = [
   ['semana', 'Segunda a quinta (R$)'],
@@ -31,6 +31,7 @@ const PASSEIO_TARIFAS: [Tarifa, string][] = [
   ['pasBase', 'Primeiro passeio, 1 cachorro (R$)'],
   ['pasAdicionalCao', 'Adicional por cachorro (R$)'],
   ['pasDesconto', 'Desconto por passeio adicional no dia (R$)'],
+  ['pasLimpeza', 'Limpeza / troca de ração e água, por realização (R$)'],
 ]
 
 const DAYCARE_TARIFAS: [Tarifa, string][] = [

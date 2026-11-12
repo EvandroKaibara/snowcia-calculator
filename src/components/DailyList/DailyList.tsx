@@ -15,7 +15,7 @@ export default function DailyList({ diarias, extra }: { diarias: Daily[]; extra?
           </span>
           <span className={styles.label}>
             {d.rotulo}
-            {extra && <label className={styles.extra}>{extra(i)}</label>}
+            {extra && <div className={styles.extra}>{extra(i)}</div>}
           </span>
           <strong>{formatBRL(d.centavos)}</strong>
         </li>
